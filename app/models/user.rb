@@ -22,4 +22,7 @@ class User < ApplicationRecord
       User.where('name LIKE ?', '%' + content + '%')
     end
   end
+  
+  has_many :group_users
+  has_many :groups, through: :group_users
 end
