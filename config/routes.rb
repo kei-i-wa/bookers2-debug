@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   resources :users,only: [:show,:index,:edit,:update]
   resources :books
   get '/search', to: 'searches#search'
-  resources :groups, except: [:destroy]
-  
+  resources :groups do
+    get "join"=>"groups#join"
+  end
   
 end
