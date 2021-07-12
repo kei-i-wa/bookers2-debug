@@ -38,7 +38,7 @@ class User < ApplicationRecord
     relationship.save
   end
   
-  def unfolloe(user_id)
+  def unfollow(user_id)
     relationships.find_by(followed_id:user_id).destroy
   end
   
