@@ -7,6 +7,16 @@ before_action :ensure_correct_user, only:[:edit]
   end
 
   def index
+    #ある日の終わり
+    to=Time.current.at_end_of_day
+    # ６日前のある日の始まり
+    from=(to-6.day).at_beginning_of_day
+    #この段階でincludesでお気に入りされてるユーザー情報を取り出す n+1問題の解決。
+    # そのためモデルファイルにも記述しているのか？
+    @books=Book.includes(:favorited_users).sort {|a,b|
+    　b.favorited_users.includes(:favorites).where(created_at:from...to).size <=>
+    　a.favorited_users.includes(:favorites).where(created_at:from...to).size
+    }
     @books = Book.all
     @book=Book.new
   end
